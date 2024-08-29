@@ -14,11 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->double('jadwal_latitude');
-            $table->double('jadwal_longtitude');
+            $table->double('jadwal_longitude');
             $table->time('jadwal_waktu_mulai');
             $table->time('jadwal_waktu_akhir');
             $table->double('latitude');
-            $table->double('longtitude');
+            $table->double('longitude');
             $table->time('start_time');
             $table->time('end_time');
             $table->timestamps();

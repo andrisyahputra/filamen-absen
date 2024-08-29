@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Cuti;
 use App\Models\Jadwal;
 use App\Models\Kehadiran;
 use App\Models\Office;
@@ -35,6 +36,18 @@ class Presensi extends Component
             'latitude' => 'required',
             'longitude' => 'required'
         ]);
+
+        $hari_ini = Carbon::today()->format('Y-m-d');
+        $setujuCuti = Cuti::where('user_id', Auth::user()->id)
+            ->where('status', 'setuju')
+            ->whereDate('tgl_mulai', '<=', $hari_ini)
+            ->whereDate('tgl_akhir', '>=', $hari_ini)
+            ->exists();
+        if ($setujuCuti) {
+            session()->flash('error', 'Anda Sedang Melakukan Cuti');
+            return;
+        }
+
         $jadwal = Jadwal::where('user_id', Auth::user()->id)->first();
         if ($jadwal) {
             $kehadiran = Kehadiran::where('user_id', Auth::user()->id)
@@ -43,26 +56,27 @@ class Presensi extends Component
                 $kehadiran = Kehadiran::create([
                     'user_id' => Auth::user()->id,
                     'jadwal_latitude' => $jadwal->office->latitude,
-                    'jadwal_longtitude' => $jadwal->office->longitude,
+                    'jadwal_longitude' => $jadwal->office->longitude,
                     'jadwal_waktu_mulai' => $jadwal->shift->mulai_waktu,
                     'jadwal_waktu_akhir' => $jadwal->shift->akhir_waktu,
-                    'latitude' => $this->latitude,
-                    'longtitude' => $this->longitude,
+                    'start_latitude' => $this->latitude,
+                    'start_longitude' => $this->longitude,
                     'start_time' => Carbon::now()->toTimeString(),
                     'end_time' => Carbon::now()->toTimeString(),
                 ]);
             } else {
                 $kehadiran->update([
-                    'latitude' => $this->latitude,
-                    'longtitude' => $this->longitude,
+                    'end_latitude' => $this->latitude,
+                    'end_longitude' => $this->longitude,
                     'end_time' => Carbon::now()->toTimeString(),
                 ]);
             }
         }
 
-        return redirect()->route('presensi', [
-            'jadwal' => $jadwal,
-            'insideRadius' => $this->insideRadius,
-        ]);
+        return redirect('admin/kehadirans');
+        // return redirect()->route('presensi', [
+        //     'jadwal' => $jadwal,
+        //     'insideRadius' => $this->insideRadius,
+        // ]);
     }
 }

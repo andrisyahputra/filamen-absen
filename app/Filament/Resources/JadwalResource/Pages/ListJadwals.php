@@ -15,9 +15,7 @@ class ListJadwals extends ListRecords
     {
         return [
 // buat tombol
-            Action::make('presensi')
-                ->url(route('presensi'))
-                ->color('warning'),
+
             Actions\CreateAction::make(),
         ];
     }

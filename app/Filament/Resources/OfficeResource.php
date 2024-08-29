@@ -43,12 +43,11 @@ class OfficeResource extends Resource
                                         'wheelPxPerZoomLevel' => 60
                                     ])
                                     ->afterStateHydrated(function (Forms\Get $get, Forms\Set $set, $record) {
-                                        if ($record && isset($record->longtitude, $record->latitude)) {
-                                            $longtitude = $record->longtitude;
-                                            $longtitude = $record->latitude;
-                                            dd($longtitude, $longtitude);
-                                            if ($latitude && $longtitude) {
-                                                $set('location', ['lat' => $latitude, 'lng' => $longtitude]);
+                                        if ($record && isset($record->longitude, $record->latitude)) {
+                                            $longitude = $record->longitude;
+                                            $latitude = $record->latitude;
+                                            if ($latitude && $longitude) {
+                                                $set('location', ['lat' => $latitude, 'lng' => $longitude]);
                                             }
                                         }
                                     })

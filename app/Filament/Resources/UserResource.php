@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
+use Filament\Forms\Components\FileUpload;
 
 class UserResource extends Resource
 {
@@ -40,7 +41,7 @@ class UserResource extends Resource
                                     ->relationship('roles', 'name')
                                     ->preload()
                                     ->searchable(),
-
+                                FileUpload::make('gambar')
                             ])
                     ]),
                 Forms\Components\Group::make()
@@ -70,6 +71,8 @@ class UserResource extends Resource
         return $table
 
             ->columns([
+                Tables\Columns\ImageColumn::make('gambar')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')

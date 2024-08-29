@@ -9,7 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Jadwal extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'shift_id', 'office_id', 'is_wfa'];
+
+    // protected $fillable = ['user_id', 'shift_id', 'office_id', 'is_wfa'];
+    // memastikan boolean
+    protected $casts = [
+        'is_wfa'=> 'boolean',
+        'is_banned'=> 'boolean',
+    ];
+    protected $guarded = ['id'];
 
     /**
      * Get the user that owns the Jadwal
