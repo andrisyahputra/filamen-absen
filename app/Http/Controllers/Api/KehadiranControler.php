@@ -17,6 +17,7 @@ class KehadiranControler extends Controller
     //
     public function getkehadiran()
     {
+
         $userId = auth()->user()->id;
         $sekarang = now()->toDateString();
         $bulanSekarang = now()->month;

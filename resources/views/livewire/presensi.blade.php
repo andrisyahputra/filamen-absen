@@ -105,14 +105,16 @@
         }
 
         function isWithinRadius(lat, lng, kantor, radius) {
-             const is_wfa = {{ $jadwal->is_wfa }};
-                if (is_wfa) {
-                    return true;
-                } else {
-                     let distance = map.distance([lat, lng], kantor);
-            return distance <= radius;
-                }
+    const is_wfa = {!! json_encode($jadwal->is_wfa ?? false) !!}; // Ubah output ke boolean valid di JS
+    if (is_wfa) {
+        return true;
+    } else {
+        let distance = map.distance([lat, lng], kantor);
+        return distance <= radius;
+    }
+}
 
-        }
+
+
     </script>
 </div>
