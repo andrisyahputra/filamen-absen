@@ -70,9 +70,9 @@ class KehadiranControler extends Controller
         if ($jadwal->is_banned) {
 
             return response()->json([
-                'success' => true,
+                'success' => false,
                 'message' => 'Anda tidak bisa absen sedang di banned',
-                'data' => $jadwal,
+                'data' => null,
             ], 200);
         } else {
             return response()->json([
