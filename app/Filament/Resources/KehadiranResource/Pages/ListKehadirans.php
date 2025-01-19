@@ -14,6 +14,9 @@ class ListKehadirans extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
+            Action::make('Download Data')
+                ->url(route('kehadiran-export'))
+                ->color('danger'),
             Action::make('presensi')
                 ->url(route('presensi'))
                 ->color('success'),
